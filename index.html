@@ -3,453 +3,489 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Música personalizada de presente | Emocione quem você ama</title>
-  <meta name="description" content="Crie uma música personalizada para presentear alguém especial. R$ 29,90." />
+  <title>Canção de Presente em até 10 minutos</title>
+  <meta name="description" content="Transforme uma história de amor, família ou saudade em uma canção personalizada. Entrega pelo WhatsApp em até 10 minutos por R$29,90." />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=DM+Serif+Display:ital@0;1&display=swap');
-
     :root {
-      --bg: #070916;
-      --bg2: #11122f;
-      --bg3: #1f1238;
-      --text: #f6f1ff;
-      --muted: #cdd2ea;
-      --line: rgba(255, 255, 255, 0.18);
-      --pink: #ff4d79;
-      --panel: rgba(255, 255, 255, 0.06);
-      --shadow: 0 22px 52px rgba(0, 0, 0, 0.45);
-      --radius: 20px;
+      --bg: #fffaf7;
+      --ink: #211618;
+      --muted: #6f5d60;
+      --line: #ecdedb;
+      --brand: #d9344e;
+      --brand-dark: #a91f35;
+      --green: #18b85a;
+      --green-dark: #0c8b40;
+      --cream: #fff4d6;
+      --radius: 8px;
+      --shadow: 0 16px 36px rgba(78, 42, 48, 0.12);
     }
 
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      color: var(--text);
-      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 85% 8%, rgba(255, 77, 121, 0.28), transparent 45%),
-        radial-gradient(circle at 8% 82%, rgba(186, 94, 255, 0.2), transparent 54%),
-        linear-gradient(150deg, var(--bg) 0%, var(--bg2) 52%, var(--bg3) 100%);
+      color: var(--ink);
+      background: linear-gradient(180deg, #fff 0%, var(--bg) 55%, #fff 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       overflow-x: hidden;
-      position: relative;
     }
 
-    .glow {
-      position: fixed;
-      inset: -40% -20% auto;
-      width: 140%;
-      height: 650px;
-      pointer-events: none;
-      z-index: -2;
-      background: radial-gradient(circle, rgba(255, 77, 121, 0.28) 0%, rgba(12, 14, 32, 0) 60%);
-      filter: blur(4px);
-    }
-
-    .glow.bottom {
-      inset: auto auto -55% -22%;
-      background: radial-gradient(circle, rgba(255, 214, 138, 0.2) 0%, rgba(18, 20, 42, 0) 60%);
-    }
+    a { color: inherit; }
 
     .container {
-      width: min(1040px, 94vw);
+      width: min(880px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 18px 0 40px;
     }
 
     .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 250, 247, 0.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      min-height: 62px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .heart {
-      width: 46px;
-      height: 46px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      color: #fff;
-      background: radial-gradient(circle, #ff98b0 0%, var(--pink) 55%, #d63b6f 100%);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      box-shadow: 0 12px 28px rgba(255, 77, 121, 0.4);
-      flex: 0 0 auto;
-    }
-
-    .headline-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .title {
-      margin: 0;
-      font-size: 1.16rem;
-      font-family: 'DM Serif Display', serif;
-      color: #fff;
-      line-height: 1.1;
-      text-wrap: balance;
-    }
-
-    .top-price {
-      margin: 0;
-      border: 1px solid rgba(255, 215, 138, 0.55);
-      border-radius: 999px;
-      background: linear-gradient(130deg, rgba(255, 215, 138, 0.34), rgba(255, 168, 99, 0.34));
-      color: #fff3dc;
-      padding: 10px 16px;
-      font-weight: 800;
-      font-size: 1.45rem;
-      white-space: nowrap;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.28);
-      box-shadow: 0 12px 28px rgba(255, 168, 98, 0.4);
-    }
-
-    .hero {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      backdrop-filter: blur(7px);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-media {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 11px;
-    }
-
-    .hero-media h2 {
-      margin: 0;
-      font-size: 1.05rem;
-      font-family: 'DM Serif Display', serif;
-      color: #fff;
-      text-transform: none;
-      letter-spacing: 0.03em;
-    }
-
-    .video-wrap {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      background: #0a102d;
-      margin: 0 auto;
-      max-width: 360px;
-    }
-
-    .video-wrap video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .wa-green {
-      text-decoration: none;
-      text-align: center;
-      font-weight: 800;
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #25d366, #00a84a 100%);
-      color: #ffffff;
-      display: inline-block;
-      width: 100%;
-      box-shadow: 0 12px 24px rgba(37, 211, 102, 0.35);
-      transition: transform .18s ease;
-    }
-
-    .wa-green:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.06);
-    }
-
-    .hero-copy {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
       gap: 14px;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
 
-    .hero-copy::after {
-      content: '';
-      position: absolute;
-      width: 240px;
-      height: 240px;
-      border-radius: 50%;
-      right: -110px;
-      bottom: -130px;
-      background: radial-gradient(circle, rgba(255, 77, 121, 0.2), rgba(255, 77, 121, 0));
-      pointer-events: none;
-    }
-
-    .hero-copy h1 {
-      margin: 0;
-      font-size: clamp(2rem, 4.2vw, 2.9rem);
-      font-family: 'DM Serif Display', serif;
-      line-height: 1.06;
-      color: #fff;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-copy .subtitle {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.72;
-      font-size: 1.02rem;
-      max-width: 60ch;
-      z-index: 1;
-      position: relative;
-    }
-
-    .hero-copy .subtitle strong {
-      color: #ffe7bc;
-      font-weight: 700;
-    }
-
-    .btn {
-      text-decoration: none;
-      border: 0;
-      border-radius: 12px;
-      font-weight: 800;
-      padding: 11px 16px;
-      display: inline-block;
-      transition: transform .18s ease;
-      width: fit-content;
-    }
-
-    .btn:hover { transform: translateY(-2px); }
-
-    .btn-cta-top {
-      width: 100%;
-      z-index: 1;
-      position: relative;
-    }
-
-    .howto {
-      margin-top: 14px;
-      padding: 20px;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    .howto h2 {
-      margin: 0 0 10px;
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.56rem;
-    }
-
-    .steps {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
+    .logo {
+      display: flex;
+      align-items: center;
       gap: 10px;
+      font-weight: 900;
     }
 
-    .steps li {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 10px;
-      align-items: start;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .steps li .num {
-      width: 32px;
-      height: 32px;
+    .logo-mark {
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      font-weight: 800;
-      color: #33061a;
-      background: linear-gradient(130deg, #ff4d79, #ff7fb5);
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand), #ff6b79);
+      box-shadow: 0 12px 28px rgba(217, 52, 78, 0.26);
+      font-weight: 900;
     }
 
-    .steps li p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .howto-cta {
-      margin-top: 12px;
-      width: 100%;
-      padding: 12px 18px;
-    }
-
-    .footer {
-      margin-top: 18px;
-      text-align: center;
-      border-top: 1px solid var(--line);
-      padding-top: 12px;
+    .nav-note {
+      margin: 0;
       color: var(--muted);
       font-size: 0.9rem;
     }
 
-    @media (max-width: 930px) {
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: var(--radius);
+      color: #fff;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 14px 28px rgba(24, 184, 90, 0.25);
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    .hero {
+      padding: 22px 0 18px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      margin: 0 auto 10px;
+      padding: 8px 12px;
+      border: 1px solid #f4c1c8;
+      border-radius: 999px;
+      color: var(--brand-dark);
+      background: #fff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    h1 {
+      margin: 0 auto;
+      max-width: 760px;
+      font-size: clamp(2.1rem, 7vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+
+    h1 em {
+      color: var(--brand-dark);
+      font-style: normal;
+    }
+
+    .lead {
+      margin: 13px auto 0;
+      max-width: 670px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.14rem);
+      line-height: 1.52;
+    }
+
+    .lead strong { color: var(--ink); }
+
+    .heart-line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      color: var(--brand-dark);
+      font-weight: 900;
+    }
+
+    .video-carousel {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      width: min(470px, 100%);
+      margin: 16px auto 0;
+    }
+
+    .video-card {
+      overflow: hidden;
+      border: 1px solid rgba(169, 31, 53, 0.16);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      text-align: left;
+    }
+
+    .video-card video {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      display: block;
+      object-fit: cover;
+      background: #171112;
+    }
+
+    .video-card span {
+      display: block;
+      padding: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .price-card {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px;
+      min-height: 50px;
+      padding: 0 15px;
+      border: 1px solid #efd786;
+      border-radius: var(--radius);
+      background: var(--cream);
+      color: #4b3400;
+      box-shadow: 0 14px 28px rgba(169, 126, 14, 0.12);
+    }
+
+    .price-card small {
+      font-weight: 850;
+      color: #6b540e;
+    }
+
+    .price-card strong {
+      font-size: 1.9rem;
+      letter-spacing: -0.04em;
+    }
+
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .trust-item {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .verified {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(78, 42, 48, 0.06);
+    }
+
+    .verified-main {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--ink);
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .check {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .safe-badge {
+      padding: 7px 10px;
+      border: 1px solid rgba(24, 184, 90, 0.22);
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: rgba(24, 184, 90, 0.08);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .short-section {
+      padding: 16px 0 30px;
+    }
+
+    .short-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(217, 52, 78, 0.1), rgba(255, 244, 214, 0.58)),
+        #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .short-box h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .short-box p {
+      margin: 9px 0 0;
+      max-width: 650px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .mobile-bar {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255, 250, 247, 0.94);
+      border-top: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    .mobile-bar .btn { width: 100%; }
+
+    @media (max-width: 720px) {
+      .nav-note,
+      .nav > .btn {
+        display: none;
+      }
+
       .hero {
+        padding-top: 18px;
+      }
+
+      .video-carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 0 2px 4px;
+      }
+
+      .video-card {
+        flex: 0 0 46%;
+        min-width: 138px;
+        scroll-snap-align: center;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+      }
+
+      .hero-actions .btn,
+      .price-card {
+        width: 100%;
+      }
+
+      .trust-row,
+      .short-box {
         grid-template-columns: 1fr;
       }
 
-      .hero-media,
-      .hero-copy {
-        padding: 16px;
+      .verified {
+        align-items: flex-start;
+        justify-content: flex-start;
       }
 
-      .hero-media {
-        order: -1;
+      .short-section {
+        padding-bottom: 92px;
       }
 
-      .video-wrap {
-        max-width: 320px;
+      .short-box {
+        padding: 20px 16px;
+      }
+
+      .short-box .btn {
+        width: 100%;
+      }
+
+      .mobile-bar {
+        display: block;
       }
     }
   </style>
 </head>
 <body>
-  <div class="glow"></div>
-  <div class="glow bottom"></div>
+  <header class="topbar">
+    <div class="container nav">
+      <div class="logo" aria-label="Canção de Presente">
+        <span class="logo-mark">CP</span>
+        <span>Canção de Presente</span>
+      </div>
+      <p class="nav-note">Atendimento seguro pelo WhatsApp</p>
+      <a class="btn wa-link" href="#">Chamar no WhatsApp</a>
+    </div>
+  </header>
 
-  <main class="container">
-    <header class="topbar">
-      <div class="brand">
-        <div class="heart" aria-hidden="true">❤</div>
-        <div class="headline-row">
-          <h1 class="title">Música personalizada de presente</h1>
-          <span class="top-price">por apenas R$ 29,90</span>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Presente emocional em canção</p>
+        <h1>Transforme uma história de amor em uma canção que <em>faz arrepiar</em></h1>
+        <p class="lead">
+          Você conta para quem é, manda a história e escolhe o estilo. A gente transforma nomes,
+          lembranças e sentimentos em uma canção pronta para enviar.
+          <strong>Entrega digital em até 10 minutos.</strong>
+        </p>
+        <div class="heart-line">❤️ Feita para emocionar de verdade</div>
+
+        <div class="video-carousel" aria-label="Carrossel com dois exemplos de canção personalizada">
+          <article class="video-card">
+            <video autoplay muted loop playsinline preload="metadata" aria-label="Vídeo emocional">
+              <source src="video-apresenta.mp4" type="video/mp4" />
+            </video>
+            <span>Presente com coração para quem você ama</span>
+          </article>
+          <article class="video-card">
+            <video autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação">
+              <source src="video-apresenta.mp4" type="video/mp4" />
+            </video>
+            <span>Veja a ideia e peça a sua pelo WhatsApp</span>
+          </article>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn wa-link" href="#">Chamar no WhatsApp agora</a>
+          <div class="price-card" aria-label="Valor da canção personalizada">
+            <small>hoje por</small>
+            <strong>R$29,90</strong>
+          </div>
+        </div>
+
+        <div class="trust-row" aria-label="Diferenciais">
+          <div class="trust-item"><strong>Com a história real</strong> nomes, memórias e sentimento.</div>
+          <div class="trust-item"><strong>Entrega rápida</strong> em até 10 minutos após confirmação.</div>
+        </div>
+
+        <div class="verified" aria-label="Empresa verificada e site seguro">
+          <div class="verified-main">
+            <span class="check">✓</span>
+            <span>Empresa com CNPJ registrado há mais de 5 anos no mercado</span>
+          </div>
+          <span class="safe-badge">Emblema de site seguro</span>
         </div>
       </div>
-    </header>
+    </section>
 
-    <section class="hero">
-      <article class="card hero-media">
-        <h2>Música, música personalizada: canção que emociona alguém de verdade</h2>
-        <div class="video-wrap">
-          <video id="heroVideo" controls preload="metadata" aria-label="Vídeo de exemplo">
-            <source src="media/video-apresentacao.mp4" type="video/mp4" />
-            Seu navegador não suporta esse recurso.
-          </video>
+    <section class="short-section">
+      <div class="container short-box">
+        <div>
+          <h2>Hoje ainda dá tempo de emocionar alguém</h2>
+          <p>
+            Chame no WhatsApp, mande para quem é a música, a história e o estilo.
+            Depois da confirmação, sua canção personalizada entra em produção.
+          </p>
         </div>
-        <a class="wa-green" id="waVideo" href="#" target="_blank" rel="noopener">Quero a música personalizada agora</a>
-      </article>
-
-      <article class="card hero-copy">
-        <h1>Música personalizada para emocionar no dia especial</h1>
-        <p class="subtitle">
-          Conte quem é a pessoa e a história dela. <strong>Música, música personalizada</strong> para emocionar, agradecer e declarar amor.<br />
-          Transforme seu sentimento em uma canção com qualidade profissional.<br />
-          Rápido, pessoal e com linguagem feita para o momento.
-        </p>
-        <a class="btn btn-cta-top wa-green" id="waTop" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-      </article>
+        <a class="btn wa-link" href="#">Quero minha canção por R$29,90</a>
+      </div>
     </section>
-
-    <section class="howto" aria-labelledby="como-fazer">
-      <h2 id="como-fazer">Como fazer</h2>
-      <ul class="steps">
-        <li>
-          <div class="num">1</div>
-          <div>
-            <strong>Fale no WhatsApp</strong>
-            <p>Informe para quem é a música e o que a história de vocês representa.</p>
-          </div>
-        </li>
-        <li>
-          <div class="num">2</div>
-          <div>
-            <strong>Escolha o estilo</strong>
-            <p>Defina o clima: romântico, sertanejo, pagode ou outro gênero que combina com o momento.</p>
-          </div>
-        </li>
-        <li>
-          <div class="num">3</div>
-          <div>
-            <strong>Confirme e receba</strong>
-            <p>Após o comprovante, a produção é concluída com atenção e retorno rápido da equipe.</p>
-          </div>
-        </li>
-      </ul>
-      <a class="howto-cta wa-green" id="waHowTo" href="#" target="_blank" rel="noopener">Chamar no WhatsApp</a>
-    </section>
-
-    <p class="footer">Música personalizada com padrão profissional para presentear com sentimento.</p>
   </main>
+
+  <div class="mobile-bar" aria-label="Chamada fixa para WhatsApp">
+    <a class="btn wa-link" href="#">Pedir no WhatsApp agora</a>
+  </div>
 
   <script>
     const waNumber = '5522981353220';
-    const waMessage = encodeURIComponent('Oi, quero fazer uma música personalizada');
-    const link = `https://api.whatsapp.com/send?phone=${waNumber}&text=${waMessage}`;
-    for (const id of ['waTop', 'waVideo', 'waHowTo']) {
-      const el = document.getElementById(id);
-      if (el) el.href = link;
-    }
+    const waMessage = encodeURIComponent('Oi, quero fazer uma canção de presente');
+    const waLink = `https://api.whatsapp.com/send?phone=${waNumber}&text=${waMessage}`;
 
-    (function () {
-      const video = document.getElementById('heroVideo');
-      if (!video) return;
-
-      const source = video.querySelector('source');
-      if (!source) return;
-
-      const candidates = [
-        'media/video-apresentacao.mp4',
-        './media/video-apresentacao.mp4',
-        '/landing-musica-personalizada/media/video-apresentacao.mp4',
-        '/digital/landing-musica-personalizada/media/video-apresentacao.mp4',
-        `${window.location.origin}/landing-musica-personalizada/media/video-apresentacao.mp4`,
-        `${window.location.origin}/digital/landing-musica-personalizada/media/video-apresentacao.mp4`
-      ];
-
-      let idx = 0;
-      function updateVideoSrc(next) {
-        source.src = next;
-        video.load();
-      }
-
-      function tryNextSource() {
-        if (idx >= candidates.length - 1) return;
-        idx += 1;
-        updateVideoSrc(candidates[idx]);
-      }
-
-      video.addEventListener('error', tryNextSource);
-      updateVideoSrc(candidates[idx]);
-    })();
+    document.querySelectorAll('.wa-link').forEach((link) => {
+      link.href = waLink;
+      link.target = '_blank';
+      link.rel = 'noopener';
+    });
   </script>
 </body>
 </html>
