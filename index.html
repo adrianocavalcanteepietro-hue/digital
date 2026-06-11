@@ -416,10 +416,10 @@
 
         <div class="video-carousel" aria-label="Vídeo da canção personalizada">
           <article class="video-card">
-            <video controls playsinline preload="metadata" aria-label="Vídeo com áudio da canção personalizada">
+            <video class="auto-video" controls autoplay muted playsinline preload="auto" aria-label="Vídeo com áudio da canção personalizada">
               <source src="video-apresenta.mp4" type="video/mp4" />
             </video>
-            <span>Aperte o play para ouvir com áudio</span>
+            <span>O vídeo começa sozinho. Toque no som para ouvir com áudio.</span>
           </article>
         </div>
 
@@ -473,6 +473,13 @@
       link.href = waLink;
       link.target = '_blank';
       link.rel = 'noopener';
+    });
+
+    document.querySelectorAll('.auto-video').forEach((video) => {
+      video.muted = true;
+      video.play().catch(() => {
+        video.setAttribute('data-autoplay-blocked', 'true');
+      });
     });
   </script>
 </body>
