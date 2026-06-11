@@ -154,10 +154,8 @@
     }
 
     .video-carousel {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      width: min(470px, 100%);
+      display: block;
+      width: min(300px, 100%);
       margin: 16px auto 0;
     }
 
@@ -347,16 +345,12 @@
       }
 
       .video-carousel {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding: 0 2px 4px;
+        display: block;
+        width: min(270px, 100%);
       }
 
       .video-card {
-        flex: 0 0 46%;
-        min-width: 138px;
-        scroll-snap-align: center;
+        width: 100%;
       }
 
       .hero-actions {
@@ -420,18 +414,12 @@
         </p>
         <div class="heart-line">❤️ Feita para emocionar de verdade</div>
 
-        <div class="video-carousel" aria-label="Carrossel com dois exemplos de canção personalizada">
+        <div class="video-carousel" aria-label="Vídeo da canção personalizada">
           <article class="video-card">
-            <video autoplay muted loop playsinline preload="metadata" aria-label="Vídeo emocional">
+            <video controls playsinline preload="metadata" aria-label="Vídeo com áudio da canção personalizada">
               <source src="video-apresenta.mp4" type="video/mp4" />
             </video>
-            <span>Presente com coração para quem você ama</span>
-          </article>
-          <article class="video-card">
-            <video autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação">
-              <source src="video-apresenta.mp4" type="video/mp4" />
-            </video>
-            <span>Veja a ideia e peça a sua pelo WhatsApp</span>
+            <span>Aperte o play para ouvir com áudio</span>
           </article>
         </div>
 
